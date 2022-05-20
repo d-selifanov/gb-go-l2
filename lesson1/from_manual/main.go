@@ -31,12 +31,13 @@ import (
 
 // MyError
 type ErrorWithTimestamp struct {
-	text string
+	text      string
 	timestamp string
 }
+
 func MyError(text string) error {
-	return &ErrorWithTimestamp {
-		text: text,
+	return &ErrorWithTimestamp{
+		text:      text,
 		timestamp: time.Now().String(),
 	}
 }
@@ -56,7 +57,7 @@ func PanicAndRecover() {
 		}
 	}()
 
-	fmt.Println(a/b)
+	fmt.Println(a / b)
 }
 
 // 2
@@ -73,19 +74,24 @@ func PanicAndRecoverWithTimestamp() {
 		}
 	}()
 
-	fmt.Println(a/b)
+	fmt.Println(a / b)
 }
 
-// 3 
+// 3
+
+func createAndCloseFile(i int) {
+	f, _ := os.Create("temp_files/file_" + strconv.Itoa(i+1))
+	defer f.Close()
+}
+
 func createFiles() {
 	_ = os.Mkdir("temp_files", 0700)
-	for i := 0; i < 1000000; i++  {
-		f, _ := os.Create("temp_files/file_" + strconv.Itoa(i+1))
-		defer f.Close()
+	for i := 0; i < 10; i++ {
+		createAndCloseFile(i)
 	}
 }
 
-// 4 
+// 4
 func panicInParallelStream() {
 	go func() {
 		defer func() {
