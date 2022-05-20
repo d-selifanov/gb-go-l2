@@ -86,7 +86,7 @@ func createAndCloseFile(i int) {
 
 func createFiles() {
 	_ = os.Mkdir("temp_files", 0700)
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 1000000; i++ {
 		createAndCloseFile(i)
 	}
 }
